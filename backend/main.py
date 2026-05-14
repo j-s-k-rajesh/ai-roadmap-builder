@@ -6,6 +6,9 @@ from pydantic import BaseModel, ValidationError
 
 import google.generativeai as genai
 
+import os
+from dotenv import load_dotenv      
+load_dotenv()
 
 # ======================================================
 # FASTAPI APP
@@ -22,7 +25,7 @@ app = FastAPI(
 # GEMINI CONFIGURATION
 # ======================================================
 
-API_KEY = "AIzaSyD6ye1d6ChI8a5pedZ0fnUUSJ71t-e4Xi4"
+API_KEY = os.getenv("GEMINI_API_KEY")
 
 genai.configure(api_key=API_KEY)
 
