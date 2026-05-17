@@ -89,6 +89,10 @@ class GoogleUser(BaseModel):
     email: str
     picture: str
 
+class RoadmapQuestionRequest(BaseModel):
+    roadmap: dict
+    question: str
+
 # ======================================================
 # ROADMAP SCHEMA
 # ======================================================
@@ -205,6 +209,39 @@ def generate_roadmap(user_goal: str) -> Dict:
             detail=f"Schema validation failed: {e}"
         )
 
+# ======================================================
+# ASK QUESTIONS ON ROADMAP
+# ======================================================
+
+def ask_roadmap_question(
+    roadmap: dict,
+    question: str
+):
+
+    prompt = f"""
+    You are an AI learning assistant.
+
+    Answer the user's question ONLY based on this roadmap.
+
+    ROADMAP:
+
+    {json.dumps(roadmap, indent=2)}
+
+    USER QUESTION:
+    {question}
+
+    Rules:
+    - Answer clearly
+    - Beginner friendly
+    - Use roadmap context only
+    - Keep answer concise
+    """
+
+    response = model.generate_content(
+        prompt
+    )
+
+    return response.text
 # ======================================================
 # HOME ROUTE
 # ======================================================
@@ -365,4 +402,26 @@ def delete_roadmap(roadmap_id: str):
     return {
         "success": True,
         "message": "Roadmap Deleted Successfully"
+    }
+
+# ======================================================
+# ASK QUESTIONS ABOUT ROADMAP
+# ======================================================
+
+@app.post("/ask-roadmap")
+
+def ask_question(request: RoadmapQuestionRequest):
+
+    answer = ask_roadmap_question(
+        request.roadmap,
+        request.question
+    )
+
+    return {
+
+        "success": True,
+
+        "question": request.question,
+
+        "answer": answer
     }
