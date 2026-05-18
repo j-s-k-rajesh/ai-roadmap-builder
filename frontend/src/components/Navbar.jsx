@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import BrandLogo from "./BrandLogo";
 
 const Navbar = () => {
   const navStyles = ({ isActive }) =>
@@ -14,9 +15,9 @@ const Navbar = () => {
         {/* Logo */}
         <NavLink
           to="/"
-          className="text-3xl font-extrabold tracking-wide text-white"
+          className="text-white"
         >
-          Learn<span className="text-blue-400">AI</span>
+          <BrandLogo />
         </NavLink>
 
         {/* Nav Links */}

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 export default function HomePage() {
+  // eslint-disable-next-line no-unused-vars
   const features = [
     {
       icon: "🧠",

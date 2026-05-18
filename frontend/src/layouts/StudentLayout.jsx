@@ -1,16 +1,18 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useParams } from "react-router-dom";
 import { useState } from "react";
+import { encodeRouteParam } from "../lib/api";
+import BrandLogo from "../components/BrandLogo";
 
 const StudentLayout = () => {
-
+  const { gmail } = useParams();
+  const routeEmail = encodeRouteParam(gmail);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navLinkStyles = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 font-medium
-    ${
-      isActive
-        ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-        : "text-gray-400 hover:bg-white/10 hover:text-white"
+    ${isActive
+      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+      : "text-gray-400 hover:bg-white/10 hover:text-white"
     }`;
 
   return (
@@ -31,17 +33,7 @@ const StudentLayout = () => {
         {/* Top Logo + Toggle */}
         <div className="flex items-center justify-between p-5 border-b border-white/10">
 
-          {sidebarOpen && (
-            <div>
-              <h1 className="text-3xl font-extrabold tracking-wide">
-                Learn<span className="text-blue-400">AI</span>
-              </h1>
-
-              <p className="text-gray-500 text-sm mt-1">
-                AI Learning Guide
-              </p>
-            </div>
-          )}
+          <BrandLogo compact={!sidebarOpen} subtitle={sidebarOpen} />
 
           {/* Hamburger Button */}
           <button
@@ -64,7 +56,7 @@ const StudentLayout = () => {
         <nav className="flex flex-col gap-3 p-4 mt-4">
 
           <NavLink
-            to="/student/dashboard"
+            to={`/student/${routeEmail}/dashboard`}
             className={navLinkStyles}
           >
             <span className="text-xl">📊</span>
@@ -73,7 +65,7 @@ const StudentLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/student/ai-roadmap"
+            to={`/student/${routeEmail}/ai-roadmap`}
             className={navLinkStyles}
           >
             <span className="text-xl">🧠</span>
@@ -82,7 +74,7 @@ const StudentLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/student/my-learning"
+            to={`/student/${routeEmail}/my-learning`}
             className={navLinkStyles}
           >
             <span className="text-xl">📚</span>
@@ -91,7 +83,7 @@ const StudentLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/student/progress"
+            to={`/student/${routeEmail}/progress`}
             className={navLinkStyles}
           >
             <span className="text-xl">📈</span>
@@ -100,16 +92,17 @@ const StudentLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/student/profile"
+            to={`/student/${routeEmail}/profile`}
             className={navLinkStyles}
           >
-            <span className="text-xl">👤</span>
+            <span className="text-xl">U</span>
 
             {sidebarOpen && <span>Profile</span>}
           </NavLink>
 
+
           <NavLink
-            to="/student/career-guidance"
+            to={`/student/${routeEmail}/career-guidance`}
             className={navLinkStyles}
           >
             <span className="text-xl">🚀</span>
@@ -118,7 +111,7 @@ const StudentLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/student/learning-chat"
+            to={`/student/${routeEmail}/learning-chat`}
             className={navLinkStyles}
           >
             <span className="text-xl">💬</span>
@@ -129,7 +122,7 @@ const StudentLayout = () => {
         </nav>
 
         {/* Bottom Card */}
-        {sidebarOpen && (
+        {/* {sidebarOpen && (
           <div className="absolute bottom-5 left-4 right-4">
 
             <div className="bg-linear-to-r from-blue-500/20 to-purple-500/20 border border-white/10 p-5 rounded-3xl backdrop-blur-xl">
@@ -154,7 +147,7 @@ const StudentLayout = () => {
 
             </div>
           </div>
-        )}
+        )} */}
       </aside>
 
       {/* Main Content */}

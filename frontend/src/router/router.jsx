@@ -62,7 +62,7 @@ const router = createBrowserRouter([
 
   // STUDENT ROUTES
   {
-    path: "/student",
+    path: "/student/:gmail",
     element: <StudentLayout />,
 
     children: [
